@@ -19,7 +19,7 @@ public:
     }
 };
 
-class Solution {
+class Solution {//8ms,96%
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> imap;
@@ -28,7 +28,7 @@ public:
             auto it = imap.find(target - nums[i]);
 
             if (it != imap.end()) 
-                return vector<int> {i, it->second};
+                return vector<int> {it->second, i};
 
             imap[nums[i]] = i;
         }

@@ -33,6 +33,8 @@ public:
                     a2++;
                 }             
             }
+            //if(ans.size()>=median+1)
+            //   break;
         }
         if((n+m)%2!=0)
         {

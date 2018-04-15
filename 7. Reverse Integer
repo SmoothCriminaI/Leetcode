@@ -1,0 +1,41 @@
+class Solution {//27ms 64%
+public:
+    int reverse(int x) {
+        stack<int> res;
+        long ans=0,w=1;
+        bool f=0,q=0;
+        if(x<0)
+        {
+            x=0-x;   
+            q=1;
+        }
+
+        while(x/10!=0)
+        {
+            int a=x%10;
+            if(a!=0)
+            {
+                f=1; 
+                res.push(a); 
+            }
+            if(a==0&&f)
+                res.push(a);
+            
+            x/=10;    
+        }
+        res.push(x%10);
+        while(!res.empty())
+        {
+            int b=res.top();
+            res.pop();
+            ans+=b*w;
+            w*=10;
+        }
+        if(q==1)
+            ans=0-ans;
+        
+        if(ans>2147483647||ans<-2147483648)
+            return 0;
+        return ans;
+    }
+};

@@ -1,4 +1,4 @@
-class Solution {//34ms,27%
+class Solution {//32ms,46%
 public:
     int myAtoi(string str) {
         int num=0,i=0;

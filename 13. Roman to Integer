@@ -1,0 +1,42 @@
+class Solution {//116ms,46%
+public:
+    int romanToInt(string s) {
+        int ans=0,pre=0;
+        int i=s.length()-1;
+        while(i>=0)
+        {
+            int a;
+            switch(s[i])
+            {
+                case 'I':
+                    a=1;
+                    break;
+                case 'V':
+                    a=5;
+                    break;
+                case 'X':
+                    a=10;
+                    break;
+                case 'L':
+                    a=50;
+                    break;
+                case 'C':
+                    a=100;
+                    break;
+                case 'D':
+                    a=500;
+                    break;
+                case 'M':
+                    a=1000;
+                    break;
+            }
+            if(a>=pre)
+                ans+=a;
+            else
+                ans-=a;
+            pre=a;
+            i--;
+        }
+        return ans;
+    }
+};

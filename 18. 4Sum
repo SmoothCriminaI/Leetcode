@@ -1,15 +1,15 @@
-class Solution {//64ms,25%
+class Solution {//28ms,81%
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         vector<vector<int>> ans;
         sort(nums.begin(),nums.end());
         if (nums.empty() || nums.size()<4) return {};
         for(decltype(sizeof(nums)) i = 0; i<nums.size()-3 ;++i){
-            //if(nums[i]>target)break;
+            if(target>=0&&nums[i]>target)break;
             int diff_1 = target - nums[i];
             for(int j = i+1;j<nums.size()-2;++j)
             {
-                //if(nums[j]>diff_1)break;
+                if(diff_1>=0&&nums[j]>diff_1)break;
                 int diff_2 = diff_1 - nums[j];
                 int k = j+1;
                 int p = nums.size()-1;

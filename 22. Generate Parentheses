@@ -1,0 +1,27 @@
+class Solution {//4ms,87%
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        if(n==0)return {};
+        else
+            par(res,"",n,0);
+        
+        //set<string> r1(res.begin(),res.end());
+        //res.assign(r1.begin(),r1.end());
+        return res;
+    }
+    void par(vector<string> &ans,string s,int n,int m){
+        if(n==0&&m==0)
+        {
+            ans.push_back(s);   
+        }
+        if(m>0)
+        {
+            par(ans,s+")",n,m-1);
+        }
+        if(n>0)
+        {
+            par(ans,s+"(",n-1,m+1);
+        }
+    }
+};

@@ -1,0 +1,8 @@
+class Solution {//4ms,73%
+public:
+    int removeElement(vector<int>& nums, int val) {
+        sort(nums.begin(),nums.end());
+        nums.erase(remove_if(nums.begin(),nums.end(),[val](int a){return a == val;}),nums.end());
+        return nums.size();
+    }
+};

@@ -1,0 +1,33 @@
+class Solution {//8ms,78%
+public:
+    void nextPermutation(vector<int>& nums) {
+        if(nums.size()==0||nums.size()==1)
+            return;
+        else if(nums.size()==2)
+        {
+            swap(nums[0],nums[1]);
+            return;
+        }
+        for(int i=nums.size()-1;i>=1;i--)//从后往前找第一个后>前的数，然后在后半段找到最小的大于前数的数，并与前数交换，再对后半段排序
+        {
+            if(nums[i]>nums[i-1])
+            {
+                int min = nums[i];
+                int index = i;
+                for(int j=i+1;j<nums.size();j++)
+                {
+                    if(nums[j]<min&&nums[j]>nums[i-1])
+                    {
+                        min=nums[j];
+                        index = j;
+                    }   
+                }
+                swap(nums[i-1],nums[index]);
+                sort(nums.begin()+i,nums.end());
+                return;
+            }
+        }
+        sort(nums.begin(),nums.end());
+        return;
+    }
+};

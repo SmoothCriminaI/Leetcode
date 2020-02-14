@@ -1,0 +1,18 @@
+class Solution {//36ms,92%
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>>ans;
+        unordered_map<string,vector<string>> group; //unordered_map is faster than map!!!!!
+        for(string s:strs)//for(int i = 0;i<strs.size();i++)
+        {
+            string tmp = s;
+            sort(s.begin(),s.end());
+            group[s].push_back(tmp);
+        }
+        for(auto it:group)//for(auto it = group.begin();it!=group.end();it++)
+        {
+            ans.push_back(it.second);//it->second
+        }
+        return ans;
+    }
+};

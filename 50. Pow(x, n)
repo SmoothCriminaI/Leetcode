@@ -1,0 +1,21 @@
+class Solution {//4ms,60%,回溯->并行节省时间
+public:
+    double myPow(double x, int n) {
+        if(x==0)return 0.0;
+        if(n==0||x==1)return 1.0;
+        double sum = x;
+        bool neg = 0;
+        if (n == INT_MIN)
+        {
+            n += 2;
+        }
+        if(n<0)
+        {
+            n = -n;
+            neg = 1;
+        }
+        double tmp = myPow(x,n/2);
+        sum = n%2==0? tmp*tmp : tmp*tmp*sum;
+        return neg? 1/sum : sum;
+    }
+};

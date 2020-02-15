@@ -1,0 +1,17 @@
+class Solution {//8ms,97%
+public:
+    bool canJump(vector<int>& nums) {
+        if(nums.size()==1)return true;
+        if(nums.size()==2&&nums[0]!=0)return true;
+        if(nums[0]==0)return false;
+        int target = nums.size()-1;
+        for(int i = 1;i<nums.size()-1;i++)
+        {
+            nums[i] = max(nums[i-1],nums[i]+i);
+            if(nums[i]<=i)break;
+            if(nums[i]>=target)
+                return true;
+        }
+        return false;
+    }
+};

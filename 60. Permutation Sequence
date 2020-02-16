@@ -1,0 +1,32 @@
+class Solution {//0ms,100%
+public:
+    string getPermutation(int n, int k) {
+        if(n==1) return "1";
+        if(n==2) return k==1? "12" : "21";
+        string nums="";
+        for(int i=1;i<=n;i++)
+            nums+= i+'0';
+        if(k==1)return nums;
+        string ans = BackPer(nums,k);
+        return ans;
+    }
+    int fact(int n)
+    {
+        int sum=1;
+        for(int i = 1;i<=n;i++)
+            sum*=i;
+        return sum;
+    }
+    string BackPer(string& nums,int k)
+    {
+        if(k==1)return nums;
+        if(nums.size()==1)return nums;
+        int sum = fact(nums.size()-1);
+        int pre = (k-1)/sum ;
+        string ans = "";
+        ans+=nums[pre];
+        nums.erase(nums.begin()+pre);
+        k = (k-1) % sum + 1;
+        return ans+BackPer(nums,k);
+    }
+};

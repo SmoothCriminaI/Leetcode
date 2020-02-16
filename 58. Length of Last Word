@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int lengthOfLastWord(string s) {//4ms,70%
+        int len = s.length();
+        //if(!len) return 0;
+        //if(s==" ")return 0;
+        int space = -1,word = -1;
+        for(int i = 0;i<len;i++)
+        {
+            if(s[i]==' '&&i!=len-1&&isalpha(s[i+1]))
+            {
+                space = i;   
+            }
+            else if(isalpha(s[i]))
+                word = i;
+        }
+
+        return word - space;
+    }
+};

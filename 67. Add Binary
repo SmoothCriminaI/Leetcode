@@ -1,0 +1,23 @@
+class Solution {//4ms,81%
+public:
+    string addBinary(string a, string b) {
+        if(a=="0")return b;
+        if(b=="0")return a;
+        if(b.size()>a.size())swap(a,b);
+        string ans(a.size()+1,'0');
+        int carry = 0;
+        for(int i = a.size()-1;i>=(int)(a.size()-b.size());i--)//i自动转成无符号整数！！！所以-1>0 ! ! !
+        {
+            ans[i]=(a[i]-'0')+(b[i-a.size()+b.size()]-'0')+(ans[i+1]-'0') >1? '1':'0';
+            ans[i+1]=(a[i]-'0')^(b[i-a.size()+b.size()]-'0')^(ans[i+1]-'0')+'0';
+            //cout<<ans[i+1]<<endl;
+        }
+        for(int i = a.size()-b.size()-1;i>=0;i--)
+        {
+            ans[i]=(a[i]-'0')+(ans[i+1]-'0') >1? '1':'0';
+            ans[i+1]=(a[i]-'0')^(ans[i+1]-'0')+'0';
+        }
+        
+        return ans[0]=='0'? ans.substr(1):ans;
+    }
+};

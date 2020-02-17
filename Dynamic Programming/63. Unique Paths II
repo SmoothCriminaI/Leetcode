@@ -1,0 +1,30 @@
+class Solution {//4ms,76%
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        int row = obstacleGrid.size(),col = obstacleGrid[0].size();
+        vector<vector<long>> a(row,vector<long>(col));
+        for(int i = 0;i<col;i++)
+        {
+            if(obstacleGrid[0][i]==1)
+                break;
+            a[0][i] = 1;
+        }
+        for(int i = 0;i<row;i++)
+        {
+            if(obstacleGrid[i][0]==1)
+                break;
+            a[i][0] = 1;
+        }
+        for(int i = 1;i<row;i++)
+        {
+            for(int j = 1;j<col;j++)
+            {
+                if(!obstacleGrid[i][j])
+                {
+                    a[i][j]=a[i-1][j]+a[i][j-1];
+                }
+            }
+        }
+        return a[row-1][col-1];
+    }
+};

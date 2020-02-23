@@ -1,0 +1,45 @@
+class Solution {//4ms,86%
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {//从后开始
+        while(n)
+        {
+            if(m>0&&nums1[m-1]>nums2[n-1])
+            {
+                nums1[m+n-1] = nums1[m-1];
+                --m;
+            }
+            else
+            {
+                nums1[m+n-1] = nums2[n-1];
+                --n;
+            }
+        }
+    }
+};
+/*class Solution {//8ms,21%
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        int i = 0,j = 0;
+        while(j<n)
+        {
+            if(nums1[i]>nums2[j])
+            {
+                for(int k = m+n-1;k>i;k--)
+                {
+                    nums1[k]=nums1[k-1];
+                }
+                nums1[i]=nums2[j];
+                i++;j++;
+            }
+            else if(i>=j+m)
+                break;
+            else 
+            {
+                i++;
+            }
+        }
+        if(j<n)
+            for(int k = j;k<n;k++)
+                nums1[m+k]=nums2[k];
+    }
+};*/

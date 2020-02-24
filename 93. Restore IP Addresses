@@ -1,0 +1,35 @@
+class Solution {//0ms,100%
+public:
+    vector<string> ans;
+    vector<string> restoreIpAddresses(string s) {
+        string res;
+        back(s,0,0,res);
+        return ans;
+    }
+    
+    void back(string s,int start,int k,string res)
+    {
+        string tmp="";
+        if(k==4&&start == s.size())
+        {
+            ans.push_back(res);
+            return;
+        }
+        else if(s.size()-start>(4-k)*3)
+            return;
+        else if(s[start]=='0')
+            k==0? back(s,start+1,k+1,res+'0'):back(s,start+1,k+1,res+".0");
+        else
+        {
+            for(int i=start;i<=start+2;i++)
+            {
+                tmp+=s[i];
+                if(atoi(tmp.c_str())>=0&&atoi(tmp.c_str())<=255)
+                {
+                    k==0? back(s,i+1,k+1,res+tmp):back(s,i+1,k+1,res+'.'+tmp);
+                }
+            }
+            return;
+        }
+    }
+};

@@ -1,0 +1,74 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {//iter bfs,12ms,60%
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root)return 0;
+        queue<TreeNode*> t;
+        t.push(root);
+        int md = 0;
+        while(!t.empty())
+        {
+            md++;
+            int size = t.size();
+            for(int i = 0;i<size;i++)
+            {
+                TreeNode* tmp = t.front();
+                t.pop();
+                if(tmp->left)
+                {
+                    t.push(tmp->left); 
+                }
+                if(tmp->right)
+                {
+                    t.push(tmp->right); 
+                }         
+            }       
+        }
+        return md;
+    }
+};
+/*class Solution {//iterative dfs,12ms,60%
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root)return 0;
+        stack<TreeNode*> t;
+        stack<int> ma;
+        t.push(root);
+        ma.push(1);
+        int md = 1;
+        while(!t.empty())
+        {
+            TreeNode* tmp = t.top();t.pop();
+            int tm = ma.top();ma.pop();
+            md = max(md,tm);
+            if(tmp->left)
+            {
+                t.push(tmp->left); 
+                ma.push(tm+1);
+            }
+            if(tmp->right)
+            {
+                t.push(tmp->right); 
+                ma.push(tm+1);
+            }         
+        }
+        return md;
+    }
+};*/
+/*class Solution {//16ms，25%
+public:
+    int maxDepth(TreeNode* root) {
+        if(!root)return 0;
+        else if(!root->left&&!root->right)return 1;
+        else
+            return 1+max(maxDepth(root->left),maxDepth(root->right));
+    }
+};*/

@@ -1,0 +1,96 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+/*class Solution {//12ms,87%,dfs_iterative,more space!!
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        vector<vector<int>> ans;
+        vector<int>res;
+        dfsRecur(root,sum,res,ans);
+        return ans;
+    }
+    void dfsRecur(TreeNode* root, int sum,vector<int>&res,vector<vector<int>> &ans)
+    {
+        if(!root)
+            return;
+        res.push_back(root->val);
+        stack<TreeNode*> t;
+        stack<int> ma;
+        stack<vector<int>>pa;
+        t.push(root);
+        ma.push(root->val);
+        pa.push(vector<int>{root->val});
+        while(!t.empty())
+        {
+            TreeNode* tmp = t.top();
+            t.pop();
+            int tm = ma.top();
+            ma.pop();
+            res=pa.top();
+            pa.pop();
+            if(!tmp->left&&!tmp->right&&tm==sum)
+            {
+                ans.push_back(res);
+            }
+            if(tmp->left)
+            {
+                t.push(tmp->left); 
+                ma.push(tm+tmp->left->val);
+                res.push_back(tmp->left->val);
+                pa.push(res);
+                res.pop_back();
+            }
+            if(tmp->right)
+            {
+                t.push(tmp->right); 
+                ma.push(tm+tmp->right->val);
+                res.push_back(tmp->right->val);
+                pa.push(res);
+                res.pop_back();
+            }   
+        }
+    }
+};*/
+class Solution {//12ms,87%,dfs_recursive
+public:
+    vector<vector<int>> pathSum(TreeNode* root, int sum) {
+        vector<vector<int>> ans;
+        vector<int>res;
+        dfsRecur(root,sum,res,ans);
+        return ans;
+    }
+    void dfsRecur(TreeNode* root, int sum,vector<int>&res,vector<vector<int>> &ans)
+    {
+        if(!root)
+            return;
+        res.push_back(root->val);
+        if(!root->left&&!root->right)
+        {
+            if(root->val==sum)
+                ans.push_back(res);
+            else
+            {
+                res.pop_back();
+                return;
+            }
+        }
+        else
+        {
+            if(root->left)
+            {
+                dfsRecur(root->left,sum-root->val,res,ans);
+            }
+            if(root->right)
+            {
+                dfsRecur(root->right,sum-root->val,res,ans);
+            }
+        }
+        res.pop_back();
+    }
+};

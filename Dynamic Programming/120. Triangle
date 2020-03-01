@@ -1,0 +1,16 @@
+class Solution {//4ms,96%
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        if(triangle.empty())return 0;
+        int row = triangle.size(),col = triangle[row-1].size();
+        vector<int> mini(triangle[row-1]);//!!!
+        for(int i=row-2;i>=0;i--)
+        {
+            for(int j=0;j<=i;j++)
+            {
+                mini[j]=min(mini[j],mini[j+1])+triangle[i][j];
+            }
+        }
+        return mini[0];
+    }
+};

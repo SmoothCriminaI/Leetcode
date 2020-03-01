@@ -1,0 +1,20 @@
+class Solution {//4ms,98%
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.empty())return 0;
+        int ma=0;
+        for(int i=1;i<prices.size();i++)
+        {
+            if(prices[i]<prices[i-1])
+            {
+                if(prices[i-1]>prices[0])
+                    ma+=prices[i-1]-prices[0];
+                prices[0]=prices[i];
+            }
+            else if(prices[i]<prices[0])
+                prices[0]=prices[i];
+        }
+        ma += prices[prices.size()-1]-prices[0];
+        return ma;
+    }
+};

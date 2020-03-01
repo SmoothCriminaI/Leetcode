@@ -1,0 +1,22 @@
+class Solution {//4ms,99%
+public:
+    bool isPalindrome(string s) {
+        if(s.size()==0||s.size()==1)return true;
+        int i=0,j=s.size()-1;
+        while(i<j)
+        {
+            while(!isalpha(s[i])&&!isdigit(s[i])&&i<j)i++;
+            while(!isalpha(s[j])&&!isdigit(s[j])&&i<j)j--;
+            if(isalpha(s[i])&&isalpha(s[j]))
+            {
+                if(toupper(s[i])!=toupper(s[j]))
+                    return false;
+            }
+            else if(s[i]!=s[j])
+                return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+};

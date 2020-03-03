@@ -1,0 +1,25 @@
+class Solution {//12ms,94%
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int sum = 0,index=1;
+        for(int i=0;i<nums.size();i++)
+            sum ^= nums[i];
+        while((sum&index)==0) //use & as a mask! much better than % !!!
+        {
+            index = index<<1;
+        }
+        sum = 0;
+        int sum2 = 0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if((nums[i]&index)==0)
+                sum ^= nums[i];
+            else
+                sum2 ^= nums[i];
+        }
+        vector<int> ans;
+        ans.push_back(sum);
+        ans.push_back(sum2);
+        return ans;
+    }
+};

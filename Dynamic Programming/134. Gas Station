@@ -1,0 +1,22 @@
+class Solution {//4ms,98%
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int s = gas.size(),flag = 0,sum=0,leftgas=0;
+        int gap[s];
+        for(int i = 0;i<s;i++)
+        {
+            gap[i] = gas[i] - cost[i];
+        }
+        for(int i = 0; i<s; i++)
+        {
+            sum+=gap[i];
+            leftgas+=gap[i];
+            if(sum<0)
+            {
+                sum=0;
+                flag=i+1;
+            }
+        }
+        return leftgas>=0? flag : -1;
+    }
+};

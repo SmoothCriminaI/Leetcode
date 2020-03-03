@@ -26,7 +26,7 @@ public:
     Node* cloneGraph(Node* node) {
         if(!node)return NULL;
         Node* root = new Node(node->val,node->neighbors);
-        unordered_map<int,Node*> visited;
+        unordered_map<int,Node*> visited;//or unordered_map<Node*,Node*>to map the old->new;
         stack<Node*> N;
         N.push(root);
         visited.insert({root->val,root});

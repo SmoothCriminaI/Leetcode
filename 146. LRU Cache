@@ -1,0 +1,44 @@
+class LRUCache {//108ms,81%
+public:
+    LRUCache(int capacity) {
+        lru = list<int>(capacity,-1);
+    }
+    int get(int key) {
+        if(table.find(key)==table.end())
+            return -1;
+        lru.erase(lv[key]);
+        lru.push_back(key);
+        lv[key] = --lru.end();
+        return table[key];
+    }
+    
+    void put(int key, int value) {
+        auto iter = table.find(key);
+        if(iter==table.end())
+        {
+            table.insert({key,value});
+            table.erase(lru.front());
+            lv.erase(lru.front());
+            lru.pop_front();
+            lru.push_back(key);
+            lv[key] = --lru.end();
+        }  
+        else
+        {
+            iter->second = value;
+            lru.push_back(key);
+            lru.erase(lv[key]);
+            lv[key]=--lru.end();
+        }
+    }
+    unordered_map<int,list<int>::iterator>lv;//make it faster!!
+    unordered_map<int,int>table;
+    list<int>lru;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */

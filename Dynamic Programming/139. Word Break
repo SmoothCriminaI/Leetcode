@@ -1,0 +1,24 @@
+class Solution {//use backtracking will TLE! dp, 8ms,76%
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        if(wordDict.empty())return false;
+        unordered_set<string> word(wordDict.begin(),wordDict.end());
+        vector<bool> dp(s.size()+1,false);
+        dp[0] = true;
+        for(int i=1;i<=s.size();i++)
+        {
+            for(int j=i-1;j>=0;j--)
+            {
+                if(dp[j])
+                {
+                    if(word.find(s.substr(j,i-j))!=word.end())
+                    {
+                        dp[i]=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return dp[s.size()];
+    }
+};

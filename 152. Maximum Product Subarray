@@ -1,0 +1,15 @@
+class Solution {//0ms,100%
+public:
+    int maxProduct(vector<int>& nums) {//一定是从头或者从尾开始且包含偶数个负数！！
+        int front=1,back=1,ans=nums[0];
+        for(int i=0;i<nums.size();i++)
+        {
+            front *= nums[i];
+            back *= nums[nums.size()-i-1];
+            ans = max(ans,max(front,back));
+            front = front==0?1:front;
+            back = back==0?1:back;
+        }
+        return ans;
+    }
+};

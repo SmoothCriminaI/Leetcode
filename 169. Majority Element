@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {//divided ans conquer,64ms,6%
+        return recur(nums,0,nums.size()-1);
+    }
+    int recur(vector<int>& nums,int start,int end)
+    {
+        if(start==end)return nums[start];
+        int mid = (end+start)/2;
+        int l = recur(nums,start,mid);
+        int r = recur(nums,mid+1,end);
+        if(l==r)return l;
+        else
+            return count(nums.begin()+start,nums.begin()+end+1,l)> //remember +1,because end()
+            count(nums.begin()+start,nums.begin()+end+1,r) ? l : r;
+    }
+    /*int majorityElement(vector<int>& nums) {//bm,16ms,97%(sometimes 40ms,not stable)
+        int ans=0,size=nums.size();
+        for(unsigned int i=0,mask=1;i<32;i++,mask<<=1)//must have unsigned!!!
+        {
+            int bitsCnt=0;
+            for(int j=0;j<size;j++)
+                if(nums[j]&mask)
+                    bitsCnt++;
+            if(bitsCnt>size/2)
+                ans|=mask;
+        }
+        return ans;
+    }*/
+    /*int majorityElement(vector<int>& nums) {//!!moore voting,24ms,50%
+        int cnt=0,max;
+        for(int i =0;i<nums.size();i++)
+        {
+            if(!cnt)
+                max = nums[i];
+            cnt += max==nums[i]?1:-1;
+        }
+        return max;
+    }*/
+    /*int majorityElement(vector<int>& nums) {//36ms,8%,sort
+        sort(nums.begin(),nums.end());
+        return *((nums.end()-nums.begin())/2+nums.begin());
+    }*/
+    /*int majorityElement(vector<int>& nums) {//28ms,30%,map
+        unordered_map<int,int>times;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(times.find(nums[i])!=times.end())
+            {
+                times[nums[i]]++;
+                if(times[nums[i]]>nums.size()/2)
+                    return nums[i];
+            }              
+            else
+                times.insert({nums[i],1});
+        }
+        return nums[0];
+    }*/
+};

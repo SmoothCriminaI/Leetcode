@@ -1,0 +1,11 @@
+class Solution {//0ms,100%
+public:
+    string convertToTitle(int n) {
+        if(n==0)return "";
+        else
+        {
+            char c = 'A'+(n-1)%26;
+            return convertToTitle((n-1)/26)+c;
+        }
+    }
+};

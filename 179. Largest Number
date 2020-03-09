@@ -1,0 +1,14 @@
+class Solution {//4ms,98%
+public:
+    string largestNumber(vector<int>& nums) {
+        vector<string>vs;
+        for(int i=0;i<nums.size();i++)
+            vs.push_back(to_string(nums[i]));
+        sort(vs.begin(),vs.end(),[](string a,string b){return a+b>b+a;});
+        string ans="";
+        for(int i=0;i<nums.size();i++)
+            ans+=vs[i];
+        if(ans[0]=='0')return "0";
+        return ans;
+    }
+};

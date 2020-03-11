@@ -1,0 +1,21 @@
+class Solution {//4ms,66%
+public:
+    map<int,int>time;
+    bool isHappy(int n) {
+        int tmp = 0;
+        while(n)
+        {
+            tmp += (n%10)*(n%10);
+            n/=10;
+        }
+        if(tmp==1)
+            return true;
+        else if(time[tmp])
+            return false;
+        else
+        {
+            time[tmp]=1;
+            return isHappy(tmp);
+        }
+    }
+};

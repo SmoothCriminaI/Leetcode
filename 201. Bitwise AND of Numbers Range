@@ -1,0 +1,22 @@
+class Solution {//8ms,91%
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        if(m==n||m==0)return m;
+        int ans=0;
+        for(unsigned int i=0,mask=1;i<31;i++,mask<<=1)
+        {
+            if(m<mask&&n>=mask)
+                return 0;
+            else if(m>=mask&&n<(mask<<1))
+            {
+                while(m!=n)
+                {
+                    m>>=1;
+                    n>>=1;
+                    ans++;
+                }
+            }
+        }
+        return m<<ans;
+    }
+};

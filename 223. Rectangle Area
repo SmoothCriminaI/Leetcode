@@ -1,0 +1,18 @@
+class Solution {//8ms,89%
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        long total = (long)(C-A) * (D-B) + (long)(G-E) * (H-F);
+    
+        if (C<=E || A>=G || B>=H || D<=F )
+            return total;
+        else
+        {
+            vector<int>width({A,C,E,G});
+            vector<int>height({B,D,F,H});
+            sort(width.begin(),width.end());
+            sort(height.begin(),height.end());
+            total = total - (width[2]-width[1])*(height[2]-height[1]);
+        }
+        return (int)total;
+    }
+};

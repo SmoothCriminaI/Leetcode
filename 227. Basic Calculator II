@@ -1,0 +1,46 @@
+class Solution {//12ms,89%
+public:
+    int calculate(string s) {
+        stack<int>num;
+        stack<char>op;
+        for(int i=0;i<s.size();i++)
+        {
+            if(isdigit(s[i]))
+            {
+                int tmp = 0;
+                while(isdigit(s[i]))
+                {
+                    tmp = tmp*10+(s[i++]-'0');
+                }
+                i--;
+                if(!op.empty()&&(op.top()=='*'||op.top()=='/'))
+                {
+                    int n1 = num.top();num.pop();
+                    num.push(op.top()=='*'?n1*tmp:n1/tmp);
+                    op.pop();
+                }
+                else
+                    num.push(tmp);
+            }
+            else if(s[i]=='+'||s[i]=='*'||s[i]=='-'||s[i]=='/')
+            {
+                if(!op.empty()&&(s[i]=='+'||s[i]=='-')&&(op.top()=='+'||op.top()=='-'))
+                {
+                    int n1 = num.top();num.pop();
+                    int n2 = num.top();num.pop();
+                    num.push(op.top()=='+'?n1+n2:n2-n1);
+                    op.pop();
+                }
+                op.push(s[i]);
+            }
+        }
+        while(!op.empty())
+        {
+            int n1 = num.top();num.pop();
+            int n2 = num.top();num.pop();
+            num.push(op.top()=='+'?n1+n2:n2-n1);
+            op.pop();
+        }
+        return num.top();
+    }
+};

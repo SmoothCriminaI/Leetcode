@@ -1,0 +1,30 @@
+class Solution {//4ms,84%
+public:
+    map<char,function<int(int,int)>>bi ={
+        {'+',[](int i,int j){return i+j;}},
+        {'-',[](int i,int j){return i-j;}},
+        {'*',[](int i,int j){return i*j;}}
+    };
+    vector<int> diffWaysToCompute(string input) {
+        vector<int> ans;
+        for(int j=0;j<=input.size()-1;j++)
+        {
+            if(bi.find(input[j])!=bi.end())
+            {
+                //string tmp1(input.begin(),input.begin()+j);
+                //string tmp2(input.begin()+j+1,input.end());
+                vector<int>a = diffWaysToCompute(input.substr(0,j));
+                vector<int>b = diffWaysToCompute(input.substr(j+1));
+                for(int i=0;i<a.size();i++)
+                {
+                    for(int k=0;k<b.size();k++)
+                        ans.push_back(bi[input[j]](a[i],b[k]));
+                }
+            }
+
+        }
+        if(ans.empty())
+            ans.push_back(atoi(input.c_str()));
+        return ans;
+    }
+};

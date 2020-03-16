@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {//iterative,dfs or postorder
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<TreeNode*>pathp,pathq,tmp;
+        stack<TreeNode*>s;
+        stack<vector<TreeNode*>>pa;
+        s.push(root);
+        pa.push({root});
+        while(!s.empty())
+        {
+            TreeNode* node = s.top();s.pop();
+            tmp = pa.top();pa.pop();
+            if(node==p)pathp=tmp;
+            if(node==q)pathq=tmp;
+            if(!pathp.empty()&&!pathq.empty())
+                break;
+            if(node->left)
+            {
+                s.push(node->left);
+                tmp.push_back(node->left);
+                pa.push(tmp);
+                tmp.pop_back();
+            }
+            if(node->right)
+            {
+                s.push(node->right);
+                tmp.push_back(node->right);
+                pa.push(tmp);
+                tmp.pop_back();
+            }
+        }
+        int size=min(pathq.size(),pathp.size());
+        for(int i=1;i<size;i++)
+            if(pathq[i]!=pathp[i])
+                return pathp[i-1];
+        return pathp[size-1];
+    }
+};
+/*class Solution {//20ms,73%,recursive
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root||root==p||root==q)return root;
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);  
+        if(!left&&!right)return NULL;
+        else if(left&&right)return root;
+        else
+            return left? left:right;
+    }
+};*/

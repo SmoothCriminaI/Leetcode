@@ -1,0 +1,40 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {//0ms,100%
+public:
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string>ans;
+        string res="";
+        if(!root)return ans;
+        res=to_string(root->val);
+        bTR(root,ans,res);
+        return ans;
+    }
+    void bTR(TreeNode* root,vector<string>&ans,string& res)
+    {
+        if(!root->left&&!root->right)
+        {
+            ans.push_back(res);
+            return;
+        }
+        res+="->";
+        string tmp = res;
+        if(root->left)
+        {
+            tmp+=to_string(root->left->val);
+            bTR(root->left,ans,tmp);
+        }
+        if(root->right)
+        {
+            res+=to_string(root->right->val);
+            bTR(root->right,ans,res);
+        }
+    }
+};

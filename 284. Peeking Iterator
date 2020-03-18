@@ -25,7 +25,7 @@ public:
 	}
 
     // Returns the next element in the iteration without advancing the iterator.
-	int peek() {
+	int peek() {//return Iterator(*this).next(); use copy constructor
         if(!flag)
         {
             tmp=next();

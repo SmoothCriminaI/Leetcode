@@ -1,0 +1,21 @@
+class Solution {//Linked List Cycle II same idea!!!
+public:
+    int findDuplicate(vector<int>& nums) {//8ms,97%
+        if(nums.size()<=1)return -1;
+        int slow = nums[0];
+        int fast = nums[nums[0]];
+        while(slow!=fast)
+        {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        }
+        //entry will be duplicated num,!!head->entry==meeting point to entry;
+        fast = 0;
+        while(fast!=slow)
+        {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+    }
+};

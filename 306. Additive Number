@@ -1,0 +1,43 @@
+class Solution {//0ms,100%
+public:
+    bool flag=false;
+    bool isAdditiveNumber(string num) {
+        vector<long>tmp;
+        bt(num,tmp,0);
+        return flag;
+    }
+    void bt(string& num,vector<long>&tmp,int start)
+    {
+        int s=tmp.size();
+        if(start==num.size())
+        {
+            if(s>=3)
+            {
+                flag=1;
+                return;
+            }
+        }
+        else if(num[start]!='0')
+        {
+            
+            for(int i=start;i<min(num.size(),num.size()/2+start);i++)
+            {
+                if(s<2||atol(num.substr(start,i-start+1).c_str())==tmp[s-1]+tmp[s-2])
+                {
+                    tmp.push_back(atol(num.substr(start,i-start+1).c_str()));
+                    bt(num,tmp,i+1);
+                    tmp.pop_back();                    
+                }
+            }                
+        }
+        else
+        {
+            if(s<2||0==tmp[s-1]+tmp[s-2])
+            {
+                tmp.push_back(0);
+                bt(num,tmp,start+1);
+                tmp.pop_back();                
+            }
+        }
+    }
+};

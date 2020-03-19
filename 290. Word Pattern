@@ -1,0 +1,50 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string str) {//0ms,100%
+        unordered_map<char,string>m1;
+        unordered_map<string,char>m2;
+        int ind=0;
+        string tmp="";
+        for(int i=0;i<str.size();i++)
+        {
+            if(str[i]!=' ')
+            {
+                tmp+=str[i];
+            }
+            else
+            {
+                if(m1.find(pattern[ind])==m1.end()&&m2.find(tmp)==m2.end())
+                {
+                    m1.insert({pattern[ind],tmp});
+                    m2.insert({tmp,pattern[ind]});
+                }     
+                else if(m1.find(pattern[ind])!=m1.end()&&m2.find(tmp)!=m2.end())
+                {
+                    if(m1[pattern[ind]]!=tmp||m2[tmp]!=pattern[ind])
+                       return false; 
+                }
+                else
+                    return false;
+                
+                if(++ind==pattern.size())
+                    return false;
+                tmp = "";
+            }
+        }
+        if(m1.find(pattern[ind])==m1.end()&&m2.find(tmp)==m2.end())
+        {
+            m1.insert({pattern[ind],tmp});
+            m2.insert({tmp,pattern[ind]});
+        }     
+        else if(m1.find(pattern[ind])!=m1.end()&&m2.find(tmp)!=m2.end())
+        {
+            if(m1[pattern[ind]]!=tmp||m2[tmp]!=pattern[ind])
+               return false; 
+        }
+        else
+            return false;
+        if(ind!=pattern.size()-1)
+            return false;
+        return true;
+    }
+};

@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {//O(nlogn),0ms,100%
+        if(nums.empty())return 0;
+        int ma=0,size=nums.size();
+        vector<int>s;
+        for(int i=0;i<size;i++)
+        {
+            auto iter = lower_bound(s.begin(),s.end(),nums[i]);
+            if(iter==s.end())
+                s.push_back(nums[i]);
+            else
+                *iter=nums[i];//dont use set,cant change val;
+                
+        }
+        return s.size();
+    }
+    /*int lengthOfLIS(vector<int>& nums) {//O(n^2),40ms,46%
+        if(nums.empty())return 0;
+        int ma=0,size=nums.size();
+        vector<int>dp(size);
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[j]<nums[i])
+                    dp[i]=max(dp[i],dp[j]+1);
+            }
+            if(dp[i]>ma)ma=dp[i];
+        }
+        return ma+1;
+    }*/
+};

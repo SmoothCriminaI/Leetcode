@@ -1,0 +1,16 @@
+class Solution {//use states machine!!!!!4ms,72%
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.empty()||prices.size()==1)return 0;
+        int size=prices.size();
+        int sell=0,rest=0,hold=INT_MIN;
+        for(int i=0;i<size;i++)
+        {
+            int prevsold = sell;
+            sell = hold + prices[i];
+            hold = max(hold,rest-prices[i]);
+            rest = max(prevsold,rest);
+        }
+        return max(sell,rest);
+    }
+};

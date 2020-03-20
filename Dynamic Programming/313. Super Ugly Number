@@ -1,0 +1,34 @@
+class Solution {//106,39%
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        unordered_map<int,int>m;
+        for(int i=0;i<primes.size();i++)
+        {
+            m[primes[i]]=0;
+        }
+        vector<int>k(n);
+        k[0]=1;
+        for(int i=1;i<n;i++)
+        {
+            int mi=INT_MAX;
+            for(auto ind:m)
+            {
+                if(k[ind.second]*ind.first<mi)
+                {
+                    mi = k[ind.second]*ind.first;
+                }
+                    
+            }
+            for(auto &ind:m)//use reference to modify the value
+            {
+                if(k[ind.second]*ind.first==mi)
+                {
+                    ind.second++;
+                }
+                    
+            }
+            k[i]=mi;
+        }
+        return k[n-1];
+    }
+};

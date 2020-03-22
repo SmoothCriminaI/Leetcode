@@ -1,0 +1,55 @@
+class Solution {//Euler Path,iterative,40ms,24%,Hierholzer’s Algorithm!!!!!
+public:
+    unordered_map<string,multiset<string>>m;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        int row=tickets.size();
+        for(int i=0;i<row;i++)
+        {
+            m[tickets[i][0]].insert(tickets[i][1]);
+        }
+        vector<string>ans;
+        stack<string>s;
+        s.push("JFK");
+        while(!s.empty())
+        {
+            string tmp=s.top();
+            if(m[tmp].empty())
+            {
+                ans.push_back(tmp);
+                s.pop();
+            }
+            else
+            {
+                s.push(*(m[tmp].begin()));
+                m[tmp].erase(m[tmp].begin());
+            }
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+};
+/*class Solution {//Euler Path,recursive,48ms,15%,Hierholzer’s Algorithm!!!!!
+public:
+    unordered_map<string,multiset<string>>m;
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        int row=tickets.size();
+        for(int i=0;i<row;i++)
+        {
+            m[tickets[i][0]].insert(tickets[i][1]);
+        }
+        vector<string>ans;
+        recur(ans,"JFK");
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
+    void recur(vector<string>& ans,string s)
+    {
+        while(m[s].size())
+        {
+            string tmp = *(m[s].begin());
+            m[s].erase(m[s].begin());
+            recur(ans,tmp);
+        }
+        ans.push_back(s);
+    }
+};*/

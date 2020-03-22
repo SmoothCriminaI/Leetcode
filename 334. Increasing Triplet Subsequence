@@ -1,0 +1,16 @@
+class Solution {//4ms,96%
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int c1=INT_MAX,c2=INT_MAX;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]<=c1)
+                c1=nums[i];//mean the best end of Increasing first Subsequence;
+            else if(nums[i]<=c2)
+                c2=nums[i];//mean the best end of Increasing second Subsequence;
+            else
+                return true;
+        }
+        return false;
+    }
+};

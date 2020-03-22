@@ -1,4 +1,4 @@
-class Solution {//4ms,96%
+class Solution {//4ms,96%,same idea to LIS with lower_bound!!!
 public:
     bool increasingTriplet(vector<int>& nums) {
         int c1=INT_MAX,c2=INT_MAX;

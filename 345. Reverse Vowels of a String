@@ -1,0 +1,21 @@
+class Solution {//20ms,13%,with unordered set(find use O(nlogn) time),8ms,92% with bool O(n) time
+public:
+    string reverseVowels(string s) {
+        //unordered_set<char>vowel({'a','e','i','o','u','A','E','I','O','U'});
+        int i=0,j=s.size()-1;
+        while(i<j)
+        {
+            while(!isVowel(s[i])&&i<j)
+                i++;
+            while(!isVowel(s[j])&&i<j)
+                j--;
+            if(i<j)
+                swap(s[i++],s[j--]);
+        }
+        return s;
+    }
+    bool isVowel(char c) const{
+        return c=='a' || c=='e' || c=='i' || c=='o' || c=='u' || 
+            c=='A' || c=='E' || c=='I' || c=='O' || c=='U';
+    }
+};

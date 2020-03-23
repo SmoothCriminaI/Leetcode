@@ -1,0 +1,12 @@
+class Solution {
+public:
+    /*bool isPowerOfFour(int num) {//0ms,100%,recursive
+        if(num==0)return false;
+        if(num==1)return true;
+        else
+            return num%4==0&&isPowerOfFour(num/4);
+    }*/
+    bool isPowerOfFour(int num) {//0ms,100%,iterative
+        return fmod(log10(num)/log10(4),1)==0;
+    }
+};

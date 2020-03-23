@@ -1,0 +1,32 @@
+class Solution {//24ms,37%
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int>m;
+        typedef unordered_map<int,int>::iterator iter;
+        auto cmp = [](iter a,iter b){return a->second > b->second;};
+        priority_queue<iter,vector<iter>,decltype(cmp)>q(cmp);//two way to define the min-heap(greater!)
+       /* priority_queue<iter,vector<iter>,function<bool(iter,iter)>> q(
+            [](iter a,iter b){
+                return a->second > b->second;
+            },
+            vector<iter>()
+        );*/
+        for(int i=0;i<nums.size();i++)
+        {
+            m[nums[i]]++;
+        }
+        for(iter i=m.begin();i!=m.end();i++)
+        {
+            q.push(i);
+            if(q.size()>k)
+                q.pop();
+        }
+        vector<int>ans;
+        for(int i=0;i<k;i++)
+        {
+            ans.push_back(q.top()->first);
+            q.pop();
+        }
+        return ans;
+    }
+};

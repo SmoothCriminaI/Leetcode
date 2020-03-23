@@ -1,0 +1,109 @@
+/**
+ * // This is the interface that allows for creating nested lists.
+ * // You should not implement it, or speculate about its implementation
+ * class NestedInteger {
+ *   public:
+ *     // Return true if this NestedInteger holds a single integer, rather than a nested list.
+ *     bool isInteger() const;
+ *
+ *     // Return the single integer that this NestedInteger holds, if it holds a single integer
+ *     // The result is undefined if this NestedInteger holds a nested list
+ *     int getInteger() const;
+ *
+ *     // Return the nested list that this NestedInteger holds, if it holds a nested list
+ *     // The result is undefined if this NestedInteger holds a single integer
+ *     const vector<NestedInteger> &getList() const;
+ * };
+ */
+class NestedIterator {//24ms,28%,O(h), stores pointers to each element in the current list
+public:
+    typedef vector<NestedInteger>::iterator iter;  
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        begins.push(nestedList.begin());
+        ends.push(nestedList.end());
+    }
+    int next() {
+        return begins.top()++->getInteger();
+    }
+    bool hasNext() {
+        while(!begins.empty()) {
+            iter it = begins.top();
+            if(it == ends.top()) {
+                begins.pop();
+                ends.pop();
+                if(!begins.empty()) begins.top()++;
+            } else if (it->isInteger()) return 1;
+            else {
+                vector<NestedInteger>& lst = it->getList();
+                begins.push(lst.begin());
+                ends.push(lst.end());
+            }
+        }
+        return 0;
+    }
+private:
+   stack<iter> begins, ends;
+};
+/*class NestedIterator {
+public:
+    NestedIterator(vector<NestedInteger> &nestedList) {//20ms,65%,O(n),Flatten the list in constructor. The nested list can be visualized as a tree and the iterator order is dfs.
+        dfs(nestedList);
+    }
+    void dfs(vector<NestedInteger> &nestedList)
+    {
+        for(int i=nestedList.size()-1;i>=0;i--)
+        {
+            if(nestedList[i].isInteger())
+                nodes.push(nestedList[i].getInteger());
+            else
+                dfs(nestedList[i].getList());
+        }
+    }
+    int next() {
+        int res = nodes.top();
+        nodes.pop();
+        return res;
+    }
+    bool hasNext() {
+        return !nodes.empty();
+    }
+    stack<int> nodes;
+};*/
+/*class NestedIterator {
+public:
+    NestedIterator(vector<NestedInteger> &nestedList) {//28ms,12%,O(n),Flatten the list as you go,but it's not a iterator!!!because an iterator should never copy the data structure. 
+        int size = nestedList.size();
+        for(int i = size - 1; i >= 0; --i) {
+            nodes.push(nestedList[i]);
+        }
+    }
+
+    int next() {
+        hasNext();
+        int res = nodes.top().getInteger();
+        nodes.pop();
+        return res;
+    }
+
+    bool hasNext() {
+        while(!nodes.empty())
+        {
+            NestedInteger cur = nodes.top();
+            if(cur.isInteger())
+                return true;
+            nodes.pop();
+            for(int i=cur.getList().size()-1;i>=0;i--)//may have a deep nest! may cost huge memory
+            {
+                nodes.push(cur.getList()[i]);
+            }
+        }
+        return false;
+    }
+    stack<NestedInteger> nodes;
+};*/
+
+/**
+ * Your NestedIterator object will be instantiated and called as such:
+ * NestedIterator i(nestedList);
+ * while (i.hasNext()) cout << i.next();
+ */

@@ -1,0 +1,6 @@
+class Solution {//0ms,100%
+public:
+    int getSum(int a, int b) {//a+b ==a^b+(a&b<<1)      
+        return b==0? a:getSum(a^b,(unsigned int)(a&b)<<1);
+    }
+};

@@ -1,0 +1,63 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {//32ms,38%,only record the pre!!
+        vector<int>ans;
+        if(nums.empty())return ans;
+        vector<int>m(nums.size(),1);
+        vector<int>pre(nums.size());
+        sort(nums.begin(),nums.end()); 
+        int ans_size = 1,ans_ind = 0;
+        for(int i=1;i<nums.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            { 
+                if(nums[i]%nums[j]==0&&m[i]<m[j]+1)
+                {
+                    m[i]=m[j]+1;
+                    pre[i]=j;
+                }
+            }
+            if(m[i]>ans_size)
+            {
+                ans_size=m[i];
+                ans_ind=i;
+            }
+        }
+        for(int i=0;i<ans_size;i++)
+        {
+            ans.push_back(nums[ans_ind]);
+            ans_ind=pre[ans_ind];          
+        }       
+        return ans;
+    }
+   /* vector<int> largestDivisibleSubset(vector<int>& nums) {//72ms,7.8%
+        vector<int>ans;
+        if(nums.empty())return ans;
+        ans.push_back(nums[0]);
+        unordered_map<int,vector<int>>m;
+        sort(nums.begin(),nums.end());     
+        for(int i=0;i<nums.size();i++)
+        {
+            vector<int>tmp{nums[i]};
+            m[nums[i]]=tmp;
+            int ind=-1,size=1;
+            for(int j=0;j<i;j++)
+            { 
+                if(nums[i]%nums[j]==0&&size<m[nums[j]].size()+1)
+                {
+                    ind = j;
+                    size = m[nums[j]].size()+1;
+                }
+            }
+            if(ind!=-1)
+            {
+                tmp = m[nums[ind]];
+                tmp.push_back(nums[i]);
+                m[nums[i]]=tmp;                
+            }
+            if(m[nums[i]].size()>ans.size())
+                ans = m[nums[i]];
+        }
+        return ans;
+    }*/
+};

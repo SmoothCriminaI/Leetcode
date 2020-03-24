@@ -1,0 +1,14 @@
+class Solution {//0ms,100%
+public:
+    int countNumbersWithUniqueDigits(int n) {
+        int ans=1;
+        for(int i=1;i<=min(n,10);i++)
+        {
+            int tmp=9,ind=9;
+            for(int j=1;j<i;j++)
+                tmp*=(ind--);
+            ans+=tmp;
+        }
+        return ans;
+    }
+};

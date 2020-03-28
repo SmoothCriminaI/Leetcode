@@ -1,0 +1,17 @@
+class Solution {//4ms,81%
+public:
+    char findTheDifference(string s, string t) {
+        unordered_map<char,int>m;
+        int i;
+        for(i=0;i<s.size();i++)
+        {
+            m[s[i]]--;
+            m[t[i]]++;
+        }
+        m[t[i]]++;
+        for(auto num:m)
+            if(num.second==1)
+                return num.first;
+        return 'a';
+    }
+};

@@ -1,0 +1,28 @@
+class Solution {//80ms,20%
+public:
+    /*int firstUniqChar(string s) {//read once
+        unordered_map<char,int>m;
+        int n = INT_MAX;
+        for(int i=0;i<s.size();i++)
+        {
+            if(m.find(s[i])==m.end())
+                m[s[i]]= i; 
+            else
+                m[s[i]]= n;
+        }
+        for(auto num:m)
+            n = min(num.second,n);
+        return n==INT_MAX ?-1:n;
+    }*/
+    int firstUniqChar(string s) {//read twice
+        unordered_map<char,int>m;
+        for(int i=0;i<s.size();i++)
+        {
+            m[s[i]]++;
+        }
+        for(int i=0;i<s.size();i++)
+            if(m[s[i]]==1)
+                return i;
+        return -1;
+    }
+};

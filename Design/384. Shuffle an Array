@@ -1,0 +1,29 @@
+class Solution {//fisher-yates algorithm,228ms,22%
+public:
+    Solution(vector<int>& nums) {
+        o = s = nums;
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {
+        return o;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() {
+        for(int i=s.size()-1;i>=0;i--)
+        {
+            int j = rand()%(i+1);
+            swap(s[i],s[j]);
+        }
+        return s;
+    }
+    vector<int> s,o;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */

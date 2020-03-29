@@ -1,0 +1,20 @@
+class Solution {//8ms,48%
+public:
+    int lastRemaining(int n) {
+        int head = 1,step = 1;
+        bool direc = true;
+        while(n>1)
+        {
+            if(direc)
+                head+=step;
+            else
+                head+= n%2==0? 0:step;
+            n/=2;
+            step*=2;
+            direc = !direc;
+        }
+        return head;
+        //return n == 1 ? 1 : 2 * (1 + n / 2 - lastRemaining(n / 2));
+    }
+    
+};

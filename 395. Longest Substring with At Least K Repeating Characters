@@ -1,0 +1,44 @@
+class Solution {//also can use sliding window from 1 to 26
+public:
+    int longestSubstring(string s, int k)//0ms,100%
+    {
+        if(s.empty()||k>s.size())return 0;
+        if(k==0)return s.size();
+        
+        unordered_map<char,int>m(26);
+        int ma = 0;
+        for(int i=0;i<s.size();i++)
+            m[s[i]]++;
+        
+        int first = 0;
+        while(first<s.size()&&m[s[first]]>=k)first++;
+        if(first==s.size())return s.size();
+        int left = longestSubstring(s.substr(0,first),k);
+        
+        while(first < s.size() && m[s[first]] < k) ++first;
+        int right = longestSubstring(s.substr(first),k);
+        
+        return max(left,right);
+    }
+   /* int longestSubstring(string s, int k) {//180ms,16%
+        int max_len = 0;
+       for (int first = 0; first+k <= s.size();) {
+           int count[26] = {0};
+           int mask = 0;
+           int max_last = first;
+           for (int last = first; last < s.size(); ++last) {
+               int i = s[last] - 'a';
+               count[i]++;
+               if (count[i]<k) mask |= (1 << i);//mark if char i appear no less than k times
+               else   mask &= (~(1 << i));
+
+               if (mask == 0) {
+                   max_len = max(max_len, last-first+1);
+                   max_last = last;
+               }
+           }
+           first = max_last + 1;
+       }
+       return max_len;
+    }*/
+};

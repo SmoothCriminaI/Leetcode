@@ -1,0 +1,44 @@
+class Solution {//0ms,100%,dfs,also can solve with union-find
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_map<string,unordered_map<string, double>> m;
+        vector<double> res;
+        for (int i = 0; i < values.size(); ++i)
+        {
+            m[equations[i][0]].insert(make_pair(equations[i][1],values[i]));
+            if(values[i]!=0)//
+                m[equations[i][1]].insert(make_pair(equations[i][0],1/values[i]));
+        }
+        
+        for(auto i:queries)
+        {
+            unordered_set<string>visit;
+            double tmp = dfs(i[0],i[1],m,visit);
+            if(tmp)res.push_back(tmp);
+            else
+                res.push_back(-1.0);
+        }
+        return res;
+    }
+    
+    double dfs(string a,string b,unordered_map<string,unordered_map<string, double>> &m,
+              unordered_set<string>& visit)
+    {
+        if(m[a].find(b)!=m[a].end())
+            return m[a][b];
+        else
+        {
+            for(auto n:m[a])
+            {
+                if(visit.find(n.first)==visit.end())
+                {
+                    visit.insert(n.first);
+                    double t = dfs(n.first,b,m,visit);
+                    if(t)return t*n.second;
+                    //visit.erase(n.first);
+                }
+            }
+            return 0;
+        }
+    }
+};

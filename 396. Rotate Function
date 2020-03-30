@@ -1,0 +1,18 @@
+class Solution {//错位相减！！！
+public:
+    int maxRotateFunction(vector<int>& A) {//8ms,92%
+        long F=0,sum=0;
+        for(int i=0;i<A.size();i++)
+        {
+            F += A[i]*i;
+            sum += A[i];
+        }
+        long ma = F;
+        for(int i=0;i<A.size();i++)
+        {
+            F = F - sum + A[i]*A.size();
+            ma = max(ma,F);
+        }
+        return (int)ma;
+    }
+};

@@ -1,0 +1,19 @@
+class Solution {//0ms,100%
+public:
+    int findNthDigit(int n) {
+        int bit,sum=0;
+        for(bit = 1;;bit++)
+        {            
+            if(sum+9*pow(10,bit-1)*bit>=n)
+                break;
+            sum+=9*pow(10,bit-1)*bit;
+        }
+        if(bit==1)return n;
+        int tmp = 1;
+        for(int i=1;i<bit;i++)tmp*=10;
+        n -= sum;
+        tmp = (n-1)/bit+tmp;
+        for(int i=(n-1)%bit+1;i<bit;i++)tmp/=10;
+        return tmp%10;
+    }
+};

@@ -1,0 +1,38 @@
+class Solution {//84ms,93%
+public:
+    Solution(vector<int>& nums) {
+        m = nums;
+        size = nums.size();
+    }  
+    int pick(int target) {
+        int ans = -1,ind = 0;
+        for(int i=0;i<size;i++)
+        {
+            if(m[i]!=target)continue;
+            ind++;
+            if(rand()%ind==0)//蓄水池抽样！！！平均几率随机！
+                ans = i;
+        }
+        return ans;
+    }
+    vector<int>m;
+    int size;
+};
+/*class Solution {//184ms,12%
+public:
+    Solution(vector<int>& nums) {
+        for(int i=0;i<nums.size();i++)
+            m[nums[i]].push_back(i);
+    }
+    
+    int pick(int target) {
+        return m[target][rand()%m[target].size()];
+    }
+    unordered_map<int,vector<int>>m;
+};*/
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * int param_1 = obj->pick(target);
+ */

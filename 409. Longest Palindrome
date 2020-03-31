@@ -1,0 +1,21 @@
+class Solution {//4ms,79%
+public:
+    int longestPalindrome(string s) {
+        map<char,int>m;
+        for(int i=0;i<s.size();i++)
+        {
+            m[s[i]]++;
+        }
+        int odd=0,ans=0;
+        for(auto num:m)
+        {
+            if(!odd&&num.second%2==1)
+                odd=1;
+            if(num.second%2==0)
+                ans+=num.second;
+            else
+                ans+=num.second-1;
+        }
+        return ans+odd;
+    }
+};

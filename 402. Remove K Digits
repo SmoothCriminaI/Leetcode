@@ -1,0 +1,76 @@
+class Solution {//4ms,91%
+public:
+        string removeKdigits(string num, int k) {//same idea but directly do with string;
+        if(k==num.size())return "0";
+        string ans="";
+        ans.push_back(num[0]);
+        for(int i=1;i<num.size();i++)
+        {
+            while(ans.size()&&num[i]<ans.back()&&k)
+            {
+                ans.pop_back();
+                k--;
+            }
+            if(ans.size()||num[i]!='0')
+                ans.push_back(num[i]);
+        }
+        while(k)
+        {
+            k--;
+            ans.pop_back();
+        }
+        return ans.empty()? "0": ans;
+    }
+   /* string removeKdigits(string num, int k) {//same idea but with stack，84ms,5%
+        if(k==num.size())return "0";
+        stack<char>s;
+        s.push(num[0]);
+        for(int i=1;i<num.size();i++)
+        {
+            while(!s.empty()&&num[i]<s.top()&&k)
+            {
+                s.pop();
+                k--;
+            }
+            if(!s.empty()||num[i]!='0')
+                s.push(num[i]);
+        }
+        while(k)
+        {
+            k--;
+            s.pop();
+        }
+        num="";
+        while(!s.empty())
+        {
+            num = num+s.top();
+            s.pop();
+        }
+        reverse(num.begin(),num.end());
+        return num.empty()? "0": num;
+    }*/
+    /*string removeKdigits(string num, int k) {//508ms,5%
+        if(k==num.size())return "0";
+        for(int i=0;i<k;i++)
+        {
+            int flag=0;
+            for(int j=0;j<num.size()-i-1;j++)
+            {
+                if(flag==0&&num[j]>num[j+1])
+                {
+                    flag=1;
+                }
+                if(flag==1)
+                    num[j] = num[j+1];
+            }           
+        }
+        int ind=-1;
+        for(int i=0;i<num.size()-k;i++)
+            if(num[i]!='0')
+            {
+                ind = i;
+                break;
+            }
+        return ind==-1? "0": num.substr(ind,num.size()-k-ind);
+    }*/
+};

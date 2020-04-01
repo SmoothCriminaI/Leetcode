@@ -1,0 +1,20 @@
+class Solution {//4ms,92%
+public:
+    string addStrings(string num1, string num2) {
+        if(num1.size()<num2.size())swap(num1,num2);
+        int carry = 0;
+        string ans(num1.size()+1,'0');
+        for(int i=num1.size()-1;i>=(int)(num1.size()-num2.size());i--)
+        {
+            int tmp = num1[i]-'0'+num2[i-num1.size()+num2.size()]-'0'+ans[i+1]-'0';
+            ans[i+1] = tmp%10+'0';
+            ans[i] = tmp/10 +'0';
+        }
+        for(int i=num1.size()-num2.size()-1;i>=0;i--)
+        {
+            ans[i] = ans[i+1]-'0'+num1[i]-'0'>=10? '1':'0';
+            ans[i+1] = (ans[i+1]-'0'+num1[i]-'0')%10 +'0';
+        }
+        return ans[0]=='0'? ans.substr(1):ans;
+    }
+};

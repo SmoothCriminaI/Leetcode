@@ -1,0 +1,38 @@
+class Solution {//52ms,66%
+public:
+    vector<vector<int>> ans;
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& matrix) {
+        if(matrix.empty())return ans;
+        int row = matrix.size(),col = matrix[0].size();
+        vector<vector<int>> pac (row,vector<int>(col,0));
+        vector<vector<int>> alt (row,vector<int>(col,0));
+        for(int i=0;i<col;i++)
+        {
+            dfs(matrix,0,i,pac);
+            dfs(matrix,row-1,i,alt);
+        }
+        for(int i=0;i<row;i++)
+        {
+            dfs(matrix,i,0,pac);
+            dfs(matrix,i,col-1,alt);
+        }
+        for(int i=0;i<row;i++)
+            for(int j=0;j<col;j++)
+                if(pac[i][j]&&alt[i][j])
+                {
+                    ans.push_back(vector<int>({i,j}));
+                }
+        
+        return ans;
+    }
+    void dfs(vector<vector<int>> &num,int i,int j,vector<vector<int>>& oce)
+    {
+        int row = num.size(),col = num[0].size();
+        oce[i][j]=1;
+        if(i!=0&&oce[i-1][j]==0&&num[i-1][j]>=num[i][j])dfs(num,i-1,j,oce);
+        if(i!=row-1&&oce[i+1][j]==0&&num[i+1][j]>=num[i][j])dfs(num,i+1,j,oce);
+        if(j!=0&&oce[i][j-1]==0&&num[i][j-1]>=num[i][j])dfs(num,i,j-1,oce);
+        if(j!=col-1&&oce[i][j+1]==0&&num[i][j+1]>=num[i][j])dfs(num,i,j+1,oce);
+        return;
+    }
+};

@@ -1,0 +1,51 @@
+class Solution {//48ms,89%
+public:
+    struct Trie{
+        Trie* next[2];
+        Trie(){
+            next[0]=NULL;next[1]=NULL;
+        }
+    };
+    
+    Trie* BuildTrie(vector<int>& nums)
+    {
+        Trie* node = new Trie(),*cur;
+        for(int n:nums)
+        {
+            cur = node;
+            for(int j=30;j>=0;j--)
+            {
+                int ind = (n>>j)&1;
+                if(!cur->next[ind])
+                    cur->next[ind]=new Trie();
+                cur = cur->next[ind];
+            }
+        }
+        return node;
+    }
+    
+    int Helper(int n,Trie* root)
+    {
+        int ans = 0;
+        for(int i=30;i>=0;i--)
+        {
+            int index = (n>>i)&1;
+            if(root->next[index^1])
+            {
+                ans+=1<<i;
+                root=root->next[index^1];
+            }
+            else
+                root=root->next[index];
+        }
+        return ans;
+    }
+    
+    int findMaximumXOR(vector<int>& nums) {
+        int ans;
+        Trie* root = BuildTrie(nums);
+        for(int n:nums)
+            ans = max(ans,Helper(n,root));
+        return ans;
+    }
+};

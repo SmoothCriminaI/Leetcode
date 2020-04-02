@@ -1,0 +1,60 @@
+class Solution {//224ms,5%
+public:
+    map<int,string>m={{0,"zero"},{1,"one"},{2,"two"},{3,"three"},{4,"four"},{5,"five"},{6,"six"},{7,"seven"},{8,"eight"},{9,"nine"}};
+    string originalDigits(string s) {
+        multiset<int>ans;
+        vector<int>count(26,0);
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='1'&&count[s[i]-'a']<0)
+            {
+                count[s[i]-'a']++;s[i]='1';
+            }
+            else if(s[i]=='z')
+                chan(0,'z',count,ans);
+            else if(s[i]=='x')
+                chan(6,'x',count,ans);
+            else if(s[i]=='g')
+                chan(8,'g',count,ans);
+            else if(s[i]=='u')
+                chan(4,'u',count,ans);
+        }
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='1'&&count[s[i]-'a']<0)
+            {
+                count[s[i]-'a']++;s[i]='1';
+            }
+            else if(s[i]=='f')
+                chan(5,'f',count,ans);
+            else if(s[i]=='h')
+                chan(3,'h',count,ans);
+            else if(s[i]=='s')
+                chan(7,'s',count,ans);
+            else if(s[i]=='w')
+                chan(2,'w',count,ans);
+        }
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]!='1'&&count[s[i]-'a']<0)
+            {
+                count[s[i]-'a']++;s[i]='1';
+            }
+            else if(s[i]=='i')
+                chan(9,'i',count,ans);
+            else if(s[i]=='o')
+                chan(1,'o',count,ans);
+        }
+        string s1="";
+        for(auto n:ans)
+            s1+=(n+'0');
+        return s1;
+    }
+    void chan(int n,char c,vector<int>&count,multiset<int>& ans)
+    {
+        ans.insert(n);
+        for(int i=0;i<m[n].size();i++)
+            if(m[n][i]!=c)
+                count[m[n][i]-'a']--;
+    }
+};

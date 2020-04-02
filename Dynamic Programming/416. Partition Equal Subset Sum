@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {//bitset,4ms,96%,same idea with dp!!
+        bitset<5001> bits(1);
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        for (auto n : nums) bits |= bits << n;
+        return !(sum & 1) && bits[sum >> 1];
+    }
+    /*bool canPartition(vector<int>& nums) {//380ms,14%,dp
+        int sum = 0;
+        for(int n:nums)
+            sum+=n;
+        if(sum%2==1)return false;
+        
+        sum/=2;
+        vector<bool>dp(sum+1);
+        dp[0]=true;
+        for(int num:nums)
+            for(int j=sum;j>=num;j--)
+            {
+                dp[j]=dp[j]||dp[j-num];//dp[i][j] = (dp[i][j] || dp[i-1][j-nums[i-1]]);
+            }
+        return dp[sum];
+    }*/
+};
+
+
+/*class Solution {//4ms,96%
+private:
+    bool dfs(vector<int>& nums, int idx, int target) {
+        if (target<0) return false;
+        if (target==0) return true;
+        for (int i=idx; i<nums.size(); i++) {
+            if (target-nums[i]<0) break; // trims the dfs since we already sorted nums
+            if (dfs(nums,i+1,target-nums[i])) return true;
+        }
+        return false;
+    }
+public:
+    bool canPartition(vector<int>& nums) {
+        int sum=accumulate(nums.begin(),nums.end(),0);
+        sort(nums.rbegin(),nums.rend()); // sort the nums
+        return sum%2==0 && dfs(nums,0,sum/2);
+    }
+};*/
+

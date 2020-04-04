@@ -1,0 +1,68 @@
+/*
+// Definition for a QuadTree node.
+class Node {
+public:
+    bool val;
+    bool isLeaf;
+    Node* topLeft;
+    Node* topRight;
+    Node* bottomLeft;
+    Node* bottomRight;
+    
+    Node() {
+        val = false;
+        isLeaf = false;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = NULL;
+        topRight = NULL;
+        bottomLeft = NULL;
+        bottomRight = NULL;
+    }
+    
+    Node(bool _val, bool _isLeaf, Node* _topLeft, Node* _topRight, Node* _bottomLeft, Node* _bottomRight) {
+        val = _val;
+        isLeaf = _isLeaf;
+        topLeft = _topLeft;
+        topRight = _topRight;
+        bottomLeft = _bottomLeft;
+        bottomRight = _bottomRight;
+    }
+};
+*/
+
+class Solution {//can reduce the recursive time by using iterative to judge if it need to go deeper.
+public:
+    Node* recur(vector<vector<int>>& grid,int i,int j,int length)
+    {//40ms,37%
+        if(length==1)
+            return new Node(grid[i][j]==1,true);
+        
+        int mid = length/2;
+        Node* tl = recur(grid,i,j,mid);
+        Node* tr = recur(grid,i,j+mid,mid);
+        Node* bl = recur(grid,i+mid,j,mid);
+        Node* br = recur(grid,i+mid,j+mid,mid);
+        if(tl->isLeaf&&tr->isLeaf&&bl->isLeaf&&br->isLeaf&&((tl->val&&tr->val&&bl->val&&br->val)||(!tl->val&&!tr->val&&!bl->val&&!br->val)))
+        {
+            bool val = tl->val;
+            delete tl;delete tr;delete bl;delete br;
+            tl = NULL;tr = NULL;bl = NULL;br = NULL;
+            return new Node(val,true);
+        }
+        
+        return new Node(true,false,tl,tr,bl,br);
+    }
+    Node* construct(vector<vector<int>>& grid) {
+        int n = grid.size();
+        if(n==0)return NULL;
+        return recur(grid,0,0,n);
+    }
+};

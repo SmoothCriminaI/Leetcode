@@ -1,0 +1,35 @@
+class Solution {//0ms,100%
+public:
+    int minMutation(string start, string end, vector<string>& bank) {
+        if(bank.empty())return -1;
+        unordered_set<string> word(bank.begin(),bank.end());
+        int depth = 0;
+        queue<string>q;
+        q.push(start);
+        while(!q.empty())
+        {
+            int s = q.size();
+            for(int i=0;i<s;i++)
+            {
+                string tmp = q.front();
+                q.pop();
+                //cout<<tmp<<endl;
+                if(tmp==end)return depth;
+                word.erase(tmp);
+                for(int j=0;j<tmp.size();j++)//amazing method to find one-letter-different word
+                {
+                    char c = tmp[j];
+                    for(int k=0;k<26;k++)
+                    {
+                        tmp[j] = 'A'+k;
+                        if(word.find(tmp)!=word.end())
+                            q.push(tmp);
+                    } 
+                    tmp[j] = c;
+                }
+            }
+            depth++;
+        }
+        return -1;
+    }
+};

@@ -1,0 +1,29 @@
+class Solution {//8ms,87%
+public:
+    int compress(vector<char>& chars) {
+        int ind = 1,num = 1;
+        for(int i=1;i<chars.size();i++)
+        {
+            if(chars[i]==chars[i-1])
+                num++;
+            else
+            {
+                if(num!=1)
+                {
+                    string tmp = to_string(num);
+                    for(int j=0;j<tmp.size();j++)
+                        chars[ind++] = tmp[j];                    
+                }
+                chars[ind++] = chars[i];
+                num = 1;
+            }
+        }
+        if(num!=1)
+        {
+            string tmp = to_string(num);
+            for(int j=0;j<tmp.size();j++)
+                chars[ind++] = tmp[j];                    
+        }
+        return ind;
+    }
+};

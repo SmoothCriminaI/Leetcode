@@ -1,0 +1,30 @@
+class Solution {//0ms,100%
+public:
+    bool circularArrayLoop(vector<int>& nums) {
+        int size = nums.size();
+        if(size==1)return false;
+        vector<int>vis(nums.size(),0);
+        for(int i=0;i<size;i++)
+        {
+            if(vis[i])continue;
+            set<int>path;
+            vis[i] = 1;
+            int ind = i+nums[i]<0? (i+nums[i])%size+size:(i+nums[i])%size;
+            if(ind!=i)
+            {
+                path.insert(i);
+                while(nums[ind]*nums[i]>0)
+                {
+                    path.insert(ind);
+                    vis[ind]=1;
+                    int next = ind+nums[ind]<0? (ind+nums[ind])%size+size:(ind+nums[ind])%size;
+                    if(next==ind)break;
+                    ind=next;
+                    if(path.find(ind)!=path.end())
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+};

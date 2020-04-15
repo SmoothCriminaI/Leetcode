@@ -1,0 +1,15 @@
+// The rand7() API is already defined for you.
+// int rand7();
+// @return a random integer in the range 1 to 7
+
+class Solution {//64ms,95%
+public:
+    int rand10() {
+        int sum = 40;
+        while(sum>=40)
+        {
+            sum = 7*(rand7()-1)+(rand7()-1);//can not use rand7()*rand7(),cuz different combination->same result like,2*6=3*4!!
+        }
+        return sum%10+1;
+    }
+};

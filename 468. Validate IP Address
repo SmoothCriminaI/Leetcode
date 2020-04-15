@@ -1,0 +1,54 @@
+class Solution {//0ms,100%
+public:
+    string validIPAddress(string IP) {
+        int ind = IP.find('.');
+        if(ind==string::npos)ind = IP.find(':');
+        if(ind==string::npos)return "Neither";
+        int size = IP.size(),sum=0;
+        int i4 = IP[ind]=='.'? 1:0;
+        if(i4)
+        {
+            for(int i=0;i<size;i++)
+            {
+                if(IP[i]!='.')
+                {
+                    int j = i;
+                    while(j+1<size&&IP[j+1]!='.')
+                    {
+                        if(IP[j]<'0'||IP[j]>'9')return "Neither";
+                        j++;
+                    }
+                    string tmp = IP.substr(i,j-i+1);
+                    if(tmp.size()>1&&tmp[0]=='0'||tmp.size()>3)return "Neither";
+                    else if(atoi(tmp.c_str())>255)return "Neither";
+                    
+                    i = j;
+                    sum++;
+                }
+                else if(i==size-1||IP[i+1]=='.')return "Neither";
+            }
+            if(sum!=4)return "Neither";
+        }
+        else
+        {
+            int num=0;
+            for(int i=0;i<size;i++)
+            {
+                if(IP[i]==':')
+                {
+                    num = 0;sum++;
+                    if(i==size-1||(i+1<size&&IP[i+1]==':'))return "Neither";   
+                }
+                else 
+                {
+                    num++;
+                    if(!(IP[i]>='0'&&IP[i]<='9')&&!(IP[i]>='a'&&IP[i]<='f')
+                        &&!(IP[i]>='A'&&IP[i]<='F'))return "Neither";
+                    if(num>4)return "Neither";
+                }
+            }
+            if(sum!=7)return "Neither";
+        }
+        return i4? "IPv4":"IPv6";
+    }
+};

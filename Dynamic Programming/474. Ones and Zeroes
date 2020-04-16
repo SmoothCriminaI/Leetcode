@@ -1,0 +1,25 @@
+class Solution {//192ms,53%
+public:
+    int findMaxForm(vector<string>& strs, int m, int n) {
+        vector<vector<int>> dp(m+1, vector<int>(n+1, 0));
+        int numZeroes, numOnes;
+        for(string s:strs)
+        {
+            numZeroes=0; 
+            numOnes=0;
+            for(char c:s)
+            {
+                if(c=='0')numZeroes++;
+                else numOnes++;
+            }
+            for(int i=m;i>=numZeroes;i--)
+            {
+                for(int j=n;j>=numOnes;j--)
+                {
+                    dp[i][j]=max(dp[i][j],dp[i-numZeroes][j-numOnes]+1);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};

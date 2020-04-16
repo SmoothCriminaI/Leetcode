@@ -1,0 +1,38 @@
+class Solution {//4ms,90%
+public:
+    bool bfs(vector<int>&nums,vector<int>&sum,int start,int tot)
+    {
+        if(start==nums.size())
+        {
+            if(sum[0]==sum[1]&&sum[0]==sum[2]&&sum[0]==sum[3])
+                return true;
+            return false;
+        }
+        else
+        {
+            for(int j=0;j<4;j++)
+            {
+                if(sum[j]+nums[start]>tot)continue;
+                int i = j;
+                while(--i>=0)//important!!!
+                    if(sum[i]==sum[j])
+                        break;
+                if(i!=-1)continue;
+                sum[j]+=nums[start];
+                if(bfs(nums,sum,start+1,tot))
+                    return true;
+                sum[j]-=nums[start];
+            }
+        }
+        return false;
+    }
+    bool makesquare(vector<int>& nums) {
+        vector<int>sum(4);
+        sort(nums.begin(),nums.end(),[](int& a,int& b){
+            return a>b;
+        });
+        int tot = accumulate(nums.begin(),nums.end(),0);
+        if(nums.size()==0||tot%4!=0)return false;
+        return bfs(nums,sum,0,tot/4);
+    }
+};

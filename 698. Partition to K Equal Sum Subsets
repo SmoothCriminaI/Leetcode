@@ -1,0 +1,44 @@
+class Solution {//4ms,85%,pruning with compare if equal to sum[i-1]!!!!
+public:
+    bool bfs(vector<int>&nums,vector<int>&sum,int start,int tot,int k)
+    {
+        if(start==nums.size())
+        {
+            int i;
+            for(i=1;i<k;i++)
+            {
+                if(sum[i]!=sum[i-1])
+                    break;
+            }
+            return i==k?true:false;
+        }
+        else
+        {
+            for(int j=0;j<k;j++)
+            {
+                if(sum[j]+nums[start]>tot)continue;
+                /*t i = j;
+                while(--i>=0)
+                    if(sum[i]==sum[j])
+                        break;
+                if(i!=-1)continue;*/
+                if(j>0&&sum[j-1]==sum[j])continue;
+                sum[j]+=nums[start];
+                if(bfs(nums,sum,start+1,tot,k))
+                    return true;
+                sum[j]-=nums[start];
+            }
+        }
+        return false;
+    }
+    
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        vector<int>sum(k);
+        sort(nums.begin(),nums.end(),[](int& a,int& b){
+            return a>b;
+        });
+        int tot = accumulate(nums.begin(),nums.end(),0);
+        if(nums.size()==0||tot%k!=0)return false;
+        return bfs(nums,sum,0,tot/k,k);
+    }
+};

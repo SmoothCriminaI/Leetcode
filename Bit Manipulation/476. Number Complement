@@ -1,0 +1,11 @@
+class Solution {//0ms,100%
+public:
+    int findComplement(int num) {
+        long start = 1;
+        while(start<=num)
+        {
+            start<<=1;
+        }
+        return (int)(start-1-num);
+    }
+};

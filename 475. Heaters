@@ -1,0 +1,47 @@
+class Solution {
+public:
+    /*int findRadius(vector<int>& houses, vector<int>& heaters) {
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+        vector<int> res(houses.size(), INT_MAX);
+        int j = 0;
+        for(int i=0;i<houses.size()&&j<heaters.size();)
+        {
+            if(houses[i]>heaters[j])
+            {
+                j++;
+            }
+            else
+            {
+                res[i] = heaters[j]-houses[i];i++;
+            }
+        }
+        j = heaters.size()-1;
+        for(int i=houses.size()-1;i>=0&&j>=0;)
+        {
+            if(houses[i]<heaters[j])j--;
+            else
+            {
+                res[i] = min(res[i],houses[i]-heaters[j]);i--;
+            }
+        }
+        return *max_element(res.begin(),res.end());
+    }*/
+    int findRadius(vector<int>& houses, vector<int>& heaters) {//160ms,11%
+        sort(heaters.begin(), heaters.end());
+        int ans=0;
+        for(int i=0;i<houses.size();i++)
+        {
+            auto large = lower_bound(heaters.begin(),heaters.end(),houses[i]);
+            int cur=INT_MAX;
+            if(large!=heaters.end())
+                cur = *large-houses[i];
+            if(large!=heaters.begin())
+            {
+                cur = min(houses[i]-*(large-1),cur);
+            }
+            ans = max(ans,cur);
+        }
+        return ans;
+    }
+};

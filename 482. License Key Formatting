@@ -1,0 +1,20 @@
+class Solution {//16ms,51%
+public:
+    string licenseKeyFormatting(string S, int K) {
+        if(S.empty())return "";
+        string ans="";
+        int j = S.size();
+        while(j>0)
+        {
+            j--;
+            if(S[j]=='-')continue;
+            ans+=toupper(S[j]);
+            if(ans.size()%(K+1)==K)
+            {
+                ans += '-';
+            }           
+        }
+        reverse(ans.begin(),ans.end());
+        return ans[0]=='-'? ans.substr(1):ans;
+    }
+};

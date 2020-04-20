@@ -1,0 +1,20 @@
+class Solution {//36ms,24%
+public:
+    int magicalString(int n) {
+        vector<int>num = {1,2,2};
+        if(n==0)return 0;
+        if(n<=3)return 1;
+        int ind = 2,ans = 1,flag = 0;
+        while(num.size()<n)
+        {
+            for(int j=0;j<num[ind]&&num.size()<n;j++)
+            {
+                num.push_back(flag+1);
+                if(!flag)ans++;
+            }
+            ind++;
+            flag = 1-flag;            
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,62 @@
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int S) {//O(n)space dp,4ms,96%
+        int sum = 0;
+        for(int i = 0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+        }        
+        if(((long)sum+S)%2!=0||sum<S||-sum>S)return 0;
+        int pos = (sum+S)/2;
+        vector<int>dp(pos+1,0);
+        dp[0] = 1;
+        for(int i = 0;i<nums.size();i++)
+        {
+            for(int j=pos;j>=0;j--)
+            {   
+                if(j>=nums[i])
+                    dp[j]+=dp[j-nums[i]];
+            }
+        }
+        return dp[pos];
+    }
+    /*int findTargetSumWays(vector<int>& nums, int S) {//O(n^2)space dp,12ms,81%
+        int sum = 0;
+        for(int i = 0;i<nums.size();i++)
+        {
+            sum+=nums[i];
+        }        
+        if(((long)sum+S)%2!=0||sum<S||-sum>S)return 0;
+        int pos = (sum+S)/2;
+        vector<vector<int>>dp(nums.size()+1,vector<int>(pos+1,0));
+        dp[0][0] = 1;
+        for(int i = 1;i<=nums.size();i++)
+        {
+            for(int j=0;j<=pos;j++)
+            {
+                dp[i][j] = dp[i-1][j];
+                if(j>=nums[i-1])
+                    dp[i][j]+=dp[i-1][j-nums[i-1]];
+            }
+        }
+        return dp[nums.size()][pos];
+    }*/
+    /*int findTargetSumWays(vector<int>& nums, int S) {//1396ms,10%
+        int ans=0;
+        sort(nums.begin(),nums.end());
+        bt(nums,S,0,ans,0);
+        return ans;
+    }
+    void bt(vector<int>& nums,int S,int sum,int& ans,int start)
+    {
+        if(start==nums.size())
+        {
+            if(sum==S)ans++;
+        }
+        else
+        {
+            bt(nums,S,sum+nums[start],ans,start+1);
+            bt(nums,S,sum-nums[start],ans,start+1);
+        }
+    }*/
+};

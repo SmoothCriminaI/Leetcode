@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {//76ms,57%
+        unordered_map<char,int>m;
+        int count = 0;
+        for(auto t:tasks)
+        {
+            m[t]++;
+            count = max(count,m[t]);
+        }
+        int ans = (count-1)*(n+1);
+        for(auto iter:m)
+        {
+            if(iter.second==count)
+                ans++;
+        }
+        return max((int)tasks.size(),ans);
+    }
+};

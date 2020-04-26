@@ -1,0 +1,24 @@
+class Solution {//0ms,100%
+public:
+    vector<string> findWords(vector<string>& words) {
+        vector<int>m(26);
+        vector<string> rows = {"QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"};
+        for (int i = 0; i < rows.size(); i++) {
+            for (auto c : rows[i]) 
+                m[c-'A'] = i;
+        }
+        vector<string>ans;
+        for(int i=0;i<words.size();i++)
+        {
+            int n = m[toupper(words[i][0])-'A'],j=1;
+            for(;j<words[i].size();j++)
+            {
+                if(m[toupper(words[i][j])-'A']!=n)
+                     break;
+            }
+            if(j==words[i].size())
+                ans.push_back(words[i]);
+        }
+        return ans;
+    }
+};

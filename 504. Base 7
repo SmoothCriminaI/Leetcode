@@ -1,0 +1,24 @@
+class Solution {//0ms,100%
+public:
+    string convertToBase7(int num) {
+        if(num==0)return "0";
+        string ans="";
+        if(num<0)
+        {
+            ans+='-';
+            num = -num;
+        }
+        int bit = log(num)/log(7);        
+        while(num!=0)
+        {
+            int tmp = pow(7,bit--);
+            ans+=to_string(num/tmp);
+            num%=tmp;
+        }
+        while(bit-->=0)
+        {
+            ans+='0';
+        }
+        return ans;
+    }
+};

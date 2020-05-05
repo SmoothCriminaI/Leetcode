@@ -1,0 +1,64 @@
+class Solution {//8ms,80%
+public:
+    int change(int amount, vector<int>& coins) {
+        int size = coins.size();
+        vector<int>dp(amount+1,0);
+        dp[0] = 1;
+        for(int i = 0;i<size;i++)
+        {
+            for(int j=coins[i];j<=amount;j++)
+            {
+                dp[j] += dp[j-coins[i]];
+            }
+        }
+        return dp[amount];
+    }
+        /** 
+     * @return number of ways to make sum s using repeated coins
+     */
+    public static int coinrep(int[] coins, int s) {
+        int[] dp = new int[s + 1]; 
+        dp[0] = 1;          
+        for (int coin : coins)      
+            for (int i = coin; i <= s; i++)         
+                dp[i] += dp[i - coin];                                  
+        return dp[s];
+    }                                       
+
+    /**
+     * @return number of ways to make sum s using non-repeated coins
+     */
+    public static int coinnonrep(int[] coins, int s) {
+        int[] dp = new int[s + 1];
+        dp[0] = 1;  
+        for (int coin : coins)
+            for (int i = s; i >= coin; i--)
+                dp[i] += dp[i - coin];              
+        return dp[s];                                                   
+    } 
+    /*int change(int amount, vector<int>& coins) {TLE!!
+        int ans = 0;
+        if(amount==0)return 1;
+        if(coins.empty())return ans;
+        sort(coins.begin(),coins.end());
+        bt(amount,coins,ans,0);
+        return ans;
+    }
+    void bt(int amount,vector<int>& coins,int &ans,int start)
+    {
+        if(amount==0)
+        {
+            ans++;
+            return;
+        }   
+        else
+        {
+            for(int i = start;i<coins.size();i++)
+            {
+                if(coins[i]>amount)
+                    break;
+                bt(amount-coins[i],coins,ans,i);
+            }
+        }
+    }*/
+};

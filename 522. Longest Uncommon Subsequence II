@@ -1,0 +1,43 @@
+class Solution {//4ms,72%
+public:
+    int findLUSlength(vector<string>& strs) {
+        unordered_map<string,int>m;
+        for(auto s:strs)
+        {
+            m[s]++;
+        }
+        vector<pair<string,int>>v;
+        for(auto n:m)
+        {
+            v.push_back(make_pair(n.first,n.second));
+        }
+        sort(v.begin(),v.end(),[](pair<string,int>&a,pair<string,int>& b)
+             {
+                 return a.first.size()>b.first.size();
+             });
+        for(int i=0;i<v.size();i++)
+        {
+            if(v[i].second==1)
+            {
+                int j = 0;
+                for(;j<i;j++)
+                {
+                    if(isSub(v[i].first,v[j].first))
+                        break;
+                }
+                if(j==i)return v[i].first.size();
+            }
+        }
+        return -1;
+    }
+    bool isSub(string &a,string &b)
+    {
+        int i=0,j=0;
+        for(;i<a.size();i++,j++)
+        {
+            while(j<b.size()&&b[j]!=a[i])j++;
+            if(j==b.size())return false;
+        }
+        return true;
+    }
+};

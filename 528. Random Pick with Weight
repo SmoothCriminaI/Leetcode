@@ -1,0 +1,21 @@
+class Solution {//276ms,11%
+public:
+    Solution(vector<int>& w) {
+        for(int i=0;i<w.size();i++)
+            we.push_back(we.empty()? w[i]:we.back()+w[i]);
+    }
+    
+    int pickIndex() {
+        int r = rand()%we.back();
+        auto iter = upper_bound(we.begin(),we.end(),r);
+        return iter-we.begin();
+    }
+
+    vector<int> we;
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */

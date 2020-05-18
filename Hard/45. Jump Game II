@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int jump(vector<int>& nums) {//DFS or Greedy,24ms,16%
+        int size = nums.size(),ans = 0,begin = 0,end = 0;
+        while(end<size-1)
+        {
+            ans++;
+            int ma = end;
+            for(int i=begin;i<=end;i++)
+            {
+                if(i+nums[i]>=size-1)return ans;
+                ma = max(ma,i+nums[i]);
+            }
+            begin = end+1;
+            end = ma;
+        }
+        return ans;
+    }
+};

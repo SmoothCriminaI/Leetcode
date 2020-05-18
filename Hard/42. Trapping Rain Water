@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {//8ms,52%
+        int left = 0,right = height.size()-1;
+        int mal = 0,mar = 0;
+        int ans = 0;
+        while(left<right)
+        {
+            if(height[left]<height[right])//that means maxleft < height[right]!!                          
+            {
+                if(height[left]>=mal)
+                    mal = height[left];
+                else
+                    ans += mal-height[left];
+                left++;
+            }
+            else
+            {
+                if(height[right]>=mar)
+                    mar = height[right];
+                else
+                    ans += mar-height[right];
+                right--;
+            }
+        }
+        return ans;
+    }
+};

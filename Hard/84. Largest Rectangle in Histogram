@@ -1,0 +1,30 @@
+class Solution {//对于每一个柱子，找到左边的比它短的i, 右边比他短的j，然后局部max就是(j - i - 1) * h,单调栈！
+public:
+    int largestRectangleArea(vector<int>& heights) {//40ms,10%
+        stack<int>s;
+        int ans = 0,size = heights.size();
+        for(int i=0;i<size;i++)
+        {
+            if(s.empty()||heights[s.top()]<=heights[i])
+                s.push(i);
+            else
+            {
+                while(!s.empty()&&heights[s.top()]>heights[i])
+                {
+                    int ind = s.top();
+                    s.pop();
+                    ans = max(ans,heights[ind]*(i-(s.empty()?0:s.top()+1)));
+                }
+                s.push(i);
+            }
+        }
+        while(!s.empty())
+        {
+            int ind = s.top();
+            s.pop();
+            ans = max(ans,heights[ind]*(size-(s.empty()?0:s.top()+1)));
+        }
+        
+        return ans;
+    }
+};

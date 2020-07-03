@@ -1,0 +1,30 @@
+class Solution {//36ms,68%
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        vector<int>tt(1440,0);
+        for(int i=0;i<timePoints.size();i++)
+        {
+            int pos = timePoints[i].find(':');
+            int h = stoi(timePoints[i].substr(0,pos));
+            int m = stoi(timePoints[i].substr(pos+1));
+            int t = h*60+m;
+            if(tt[t]!=0)
+                return 0;
+            tt[t] = 1;
+        }
+        int ans = 1440,pre = -1440,first = -1,last;
+        for(int i=0;i<1440;i++){
+            if(tt[i]==0)
+                continue;
+            else{
+                if(pre==-1440)
+                    first = i;
+                ans = min(ans,i-pre);    
+                pre = i;
+                last = i;
+            }
+        }
+        ans = min(ans,1440-last+first);
+        return ans;
+    }
+};

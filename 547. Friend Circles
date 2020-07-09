@@ -1,0 +1,29 @@
+class Solution {//60ms,39%
+public:
+    int findCircleNum(vector<vector<int>>& M) {
+        if(M.empty())
+            return 0;
+        int cir = 0;
+        vector<int>c(M.size(),-1);
+        for(int i=0;i<M.size();i++)
+        {
+            if(c[i]!=-1)
+                continue;
+            else
+            {
+                dfs(M,c,cir,i);
+                cir++;
+            }
+        }
+        return cir;
+    }
+    void dfs(vector<vector<int>>& M,vector<int>&c,int cir,int ind)
+    {
+        c[ind] = cir;
+        for(int i=0;i<M.size();i++)
+        {
+            if(M[ind][i]==1&&c[i]==-1&&i!=ind)
+                dfs(M,c,cir,i);
+        }
+    }
+};

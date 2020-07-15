@@ -1,0 +1,61 @@
+class Solution {//112ms,53%
+public:
+    int leastBricks(vector<vector<int>>& wall) {//should record the bricks'edges
+        if(wall.empty())return 0;
+        int h = wall.size();
+        unordered_map<int,int>m;
+        
+        for(int i=0;i<h;i++)
+        {
+            int tmp = 0;
+            for(int j=0;j<wall[i].size()-1;j++)//ignore the last brick
+            {
+                tmp += wall[i][j];
+                m[tmp]++;
+            }
+        }
+        int res = h;
+        for(auto i:m)
+        {
+            res = min(res,h-i.second);
+        }
+        return res;
+    }
+    /*int leastBricks(vector<vector<int>>& wall) {//TLE
+        if(wall.empty())
+            return 0;
+        int h = wall.size(),w = wall[0].size(),sum = 0;
+        for(int i=0;i<w;i++)
+        {
+            sum += wall[0][i];
+        }
+        unordered_map<int,int>m;
+        int res = h,base = 0;
+        for(int i=0;i<h;i++)
+        {
+            int tmp = 0;
+            if(wall[i].size()==1)
+            {
+                base++;
+                continue;
+            }
+            for(int j=0;j<wall[i].size();j++)
+            {
+                for(int k=tmp+1;k<tmp+wall[i][j];k++)
+                {
+                    m[k]++;
+                }
+                tmp+=wall[i][j];
+            }
+        }
+        if(m.size()==0||m.size()!=sum-1)
+            return base;
+        for(auto &i:m)
+        {
+            cout<<i.first<<" "<<i.second<<endl;
+            res = min(res,i.second);            
+        }
+        
+        return (res+base);
+    }*/
+};

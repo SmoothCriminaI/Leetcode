@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int arrayNesting(vector<int>& nums) {//36ms,79%
+        if(nums.empty())return 0;
+        int size = nums.size();
+        int ans = 0,vis = 0;
+        vector<bool>visited(size,false);   
+        for(int i=0;i<size;i++)
+        {
+            if(size - vis <= ans)
+                break;
+            else if(visited[i])
+                continue;
+            else{
+                int cur = i;
+                int len = 1;
+                visited[cur] = true;
+                while(nums[cur]!=i)
+                {
+                    len++;
+                    cur = nums[cur]; 
+                    visited[cur] = true;
+                }
+                vis += len;
+                ans = max(ans,len);
+            }
+        }        
+        return ans;
+    }
+    // int arrayNesting(vector<int>& nums) {//dfs,23%
+    //     if(nums.empty())return 0;
+    //     unordered_set<int>s;
+    //     int size = nums.size();
+    //     int ans = 0;
+    //     vector<bool>visited(size,false);   
+    //     for(int i=0;i<size;i++)
+    //     {
+    //         if(visited[i])
+    //             continue;
+    //         else{
+    //             s.clear();
+    //             ans = max(ans,dfs(i,visited,s,nums));
+    //         }
+    //     }        
+    //     return ans;
+    // }
+    // int dfs(int i,vector<bool>& visited,unordered_set<int>& s,vector<int>& nums){
+    //     if(s.find(i)!=s.end())
+    //         return 0;
+    //     else{ 
+    //         visited[i] = true;
+    //         s.insert(i);
+    //         return 1+dfs(nums[i],visited,s,nums);
+    //     }
+    // }
+};
